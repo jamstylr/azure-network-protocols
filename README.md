@@ -21,10 +21,12 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 
 <h2>High-Level Steps</h2>
 
-- Step 1
-- Step 2
-- Step 3
-- Step 4
+- Create VMs (Windows 10 and Ubuntu) and Install Wireshark
+- Observe ICMP Traffic (No Port #)
+- Observe SSH Traffic (TCP Port 22)
+- Observe DHCP Traffic (UDP Port 67 & 68)
+- Observe DNS Traffic (UDP Port 53)
+- Observe RDP Traffic (TCP Port 3389)
 
 <h2>Actions and Observations</h2>
 

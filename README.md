@@ -38,30 +38,31 @@ In this tutorial we will observe several network traffic protocols between two A
 
 ![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/0c6ea1a5-5499-4df7-bca5-e779208a1e91)
 ![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/e56039c4-1838-4218-8a22-8d136cc76e19)
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/09396fd2-fb8e-450d-9bef-f768792c521c)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/8f58af73-e252-40c9-989f-3d2cfcea96f6)
 <p>
 Following the creation of the VMs, connect to VM-1 through Remote Desktop using VM-1’s public IP address. Open a web browser and download Wireshark from https://www.wireshark.org/download.html. After installation is complete, launch Wireshark, choose “Ethernet”, and click on the blue fin icon in the top left corner to start observing traffic.
 </p>
 <br />
 
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/1bd2dcaf-4875-49a5-b99e-0f781ebe8c96)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/ccb0974b-af20-4a4c-b009-c9dce7136147)
 <p>
 Our first observation will focus on RDP (Remote Desktop Protocol) traffic. To start, enter “rdp” or “tcp.port==3389” (RDP uses port 3389) into the Wireshark search bar. In Wireshark, you'll see details like Source address, Destination address, and the Protocol being used (RDP). 
 </p>
 <br />
 
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/524a8d9c-a5c1-426c-a38f-2c8eae29589b)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/fd105db0-3195-4494-9303-81f77fa6fcaf)
 <p>
 Next, let's focus on ICMP traffic. In Wireshark's search bar, type “icmp” to filter for ICMP traffic. ICMP (Internet Control Message Protocol) is a network layer protocol that sends error messages and operational info. It's often used for network diagnostics and troubleshooting. 
 </p>
 <br />
 
 ![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/835ced8d-e8ad-4b67-97bd-04a1792328a3)
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/3a9dbf17-29dd-4004-a6e4-4f65246a7285)
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/6fc35d2f-12bb-43d8-8c77-162abc77799d)
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/6637cc51-c961-45ba-82ab-b2e6721e6bb4)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/f9951e04-88d5-4e68-bc8f-990699637c75)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/681d364b-6e15-455d-b257-7873bea83ff2)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/89369fa5-c06e-4f24-997b-57ca652984b4)
+
 <p>
-To observe ICMP traffic in Wireshark, we will now ping VM2's private IP address from VM-1. Ping uses ICMP messages to check if a device is reachable over a network and measures the time it takes for a message to travel to and from the device. Go to Azure and copy VM-2’s private IP address. From VM-1, open PowerShell (run as admin) and ping [VM-2’s private ip address]. In Wireshark you will be able to see the ping request and reply packets being sent to and from the Ubuntu VM. In Wireshark, we can also examine each packet individually and view the actual data transmitted during each ping. We can use the PowerShell command “ping www.google.com -4" to observe additional ICMP traffic, where the “-4” flag specifies the use of the IPv4 protocol.
+To observe ICMP traffic in Wireshark, we will now ping VM2's private IP address from VM-1. Ping uses ICMP messages to check if a device is reachable over a network and measures the time it takes for a message to travel to and from the device. Go to Azure and copy VM-2’s private IP address. From VM-1, open PowerShell (run as admin) and ping [VM-2’s private IP address]. In Wireshark you will be able to see the ping request and reply packets being sent to and from the Ubuntu VM. In the bottom section of Wireshark, you can view the details of individual packets in the "Packet Details" pane or "Packet Bytes" pane. You can also see these details in a new window by right-clicking on an individual packet and selecting "Show Packet in New Window". Additionally, you can click on the green fin icon to clear the screen or restart the capture. To clear the screen in PowerShell, type the command "clear" and press enter. We can use the PowerShell command “ping www.google.com -4" to observe additional ICMP traffic, where the “-4” flag specifies the use of the IPv4 protocol.
 </p>
 <br />
 

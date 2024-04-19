@@ -66,8 +66,8 @@ To observe ICMP traffic in Wireshark, we will now ping VM2's private IP address 
 </p>
 <br />
 
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/816033ec-c11d-4e17-993f-b7d41b3d8cd1)
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/32afa201-b276-4809-840d-5eb3654fe78c)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/5781ae99-d181-401c-8e3c-7c0e0fa799b7)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/01d9a3a6-efd0-4303-b4b0-d911fd7146f6)
 ![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/01cea0ed-1215-4c03-a8be-160ea8a01fbe)
 ![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/ea54b1f0-ba5b-45ef-8c2e-2514c0703a0f)
 ![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/afdf2e5e-850c-49b5-8084-fa0325ba2683)
@@ -76,16 +76,18 @@ Next, we'll block inbound ICMP traffic on our Ubuntu VM to see its effects in Wi
 </p>
 <br />
 
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/8304079d-46f5-4841-b8ca-12022d31c503)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/0877c918-d015-411f-8f64-c8b21f431189)
 ![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/3aa6ca63-af9b-4ce2-80e8-7e0759a7b879)
-![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/63aeb44c-8934-473c-a6b3-bce28e3e675d)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/470dc875-bc43-4918-8235-b5eeef18e9f5)
 <p>
 Returning to VM-1, PowerShell will indicate that the ping requests have timed out, and Wireshark will display only “request” packets without any corresponding “reply” packets. To allow pinging to VM-2 again, navigate back to Azure. To restore the ability to ping VM-2, you can either delete the previously created Inbound Security rule or modify its Action from "Deny" to “Allow". After making this change, PowerShell will stop showing timed-out requests, and Wireshark will once again capture “reply” packets. To stop the continuous pinging in PowerShell, press Control+C. 
 </p>
 <br />
 
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/0c52bd35-a9c1-4224-ae3a-1318743515eb)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/71f2d1c9-6139-4443-a573-9029e4201b5e)
 <p>
-Back on VM-1, let's look at SSH traffic in Wireshark. You can filter SSH traffic by typing “ssh” or “tcp.port==22” into the Wireshark search bar. You will need the username you used when creating VM-2 in Azure; for example, my username was “labuser”. In PowerShell, enter the command “ssh labuser@[VM2's Private IP]”, replacing “labuser” with your VM-2 username, then press Enter. You'll encounter a warning message asking if you want to continue connecting; type “yes” and press Enter. Proceed to enter your password (which will not be displayed). Here are some commands you can enter to observe traffic in Wireshark: “id”, “uname -a”, “ls -lasth”, and “touch hi.txt” (to create a .txt file). Re-enter “ls -lasth” to view the .txt file you created. When finished, type “exit” to end the session. 
+Back on VM-1, let's look at SSH traffic in Wireshark. You can filter SSH traffic by typing “ssh” or “tcp.port==22” into the Wireshark search bar. You will need the username you used when creating VM-2 in Azure; for example, my username was “labuser”. In PowerShell, enter the command “ssh labuser@[VM2's Private IP]”, replacing “labuser” with your VM-2 username, then press Enter. You'll encounter a warning message asking if you want to continue connecting; type “yes” and press Enter. Proceed to enter your password (which will not be displayed). Here are some commands you can enter to observe traffic in Wireshark: “id”, “uname -a”, “ls -lasth”, and “touch hi.txt” (to create a .txt file). Re-enter “ls -lasth” to view the .txt file you created. Now enter the command “rm hi.txt” (to remove the .txt file). Re-enter “ls -lasth” to confirm the .txt file has been deleted. When finished, type “exit” to end the session.. 
 </p>
 <br />
 

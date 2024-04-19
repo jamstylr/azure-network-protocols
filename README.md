@@ -91,11 +91,13 @@ Back on VM-1, let's look at SSH traffic in Wireshark. You can filter SSH traffic
 </p>
 <br />
 
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/117f4806-5d8d-471e-a105-76702309b6e1)
 <p>
 Next we will observe DNS (Domain Name System) traffic. To filter DNS traffic in Wireshark, you can type “dns” or “udp.port==53” in the search bar. For this tutorial we will use the “nslookup” command in PowerShell to examine DNS traffic. The “nslookup” command helps retrieve information about domain names or IP addresses by querying a DNS server. To give it a try, open PowerShell and enter the command “nslookup www.google.com". Then, observe the network traffic in Wireshark. 
 </p>
 <br />
 
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/b7c68a12-dea3-44c3-8198-b746b250ceb5)
 <p>
 For the final part of this tutorial, let's examine DHCP (Dynamic Host Configuration Protocol) traffic. To view DHCP traffic in Wireshark, type “dhcp” into the search bar. You can also combine filters using the "or" logical operator. Since DHCP uses UDP ports 67 and 68, you can filter for these ports by typing “udp.port==67 or udp.port==68” in Wireshark's search bar. In PowerShell, run the command “ipconfig /renew” to request a lease renewal for the current IP address from the DHCP server. While the renewal process is ongoing, keep an eye on the network traffic in Wireshark. 
 </p>

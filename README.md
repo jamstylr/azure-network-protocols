@@ -75,7 +75,9 @@ Next, we'll block inbound ICMP traffic on our Ubuntu VM to see its effects in Wi
 </p>
 <br />
 
-
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/8304079d-46f5-4841-b8ca-12022d31c503)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/3aa6ca63-af9b-4ce2-80e8-7e0759a7b879)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/63aeb44c-8934-473c-a6b3-bce28e3e675d)
 <p>
 Returning to VM-1, PowerShell will indicate that the ping requests have timed out, and Wireshark will display only “request” packets without any corresponding “reply” packets. To allow pinging to VM-2 again, navigate back to Azure. To restore the ability to ping VM-2, you can either delete the previously created Inbound Security rule or modify its Action from "Deny" to “Allow". After making this change, PowerShell will stop showing timed-out requests, and Wireshark will once again capture “reply” packets. To stop the continuous pinging in PowerShell, press Control+C. 
 </p>

@@ -30,39 +30,51 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 
 <h2>Actions and Observations</h2>
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
+
 <p>
 In this tutorial we will observe several network traffic protocols between two Azure Virtual Machines using Wireshark. To begin, create a Resource Group and set up two VMs: one running Windows 10 and the other Ubuntu. Both VMs will need to be inside the same Network (vnet), the same region, and have at least 2 vcpus. When creating the VMs, also make sure they are in the same region as the Resource Group. Don't forget to establish a username and password for remote access to your VMs. For this tutorial, I will name the Windows virtual machine "VM-1" and the Ubuntu virtual machine "VM-2".
 </p>
 <br />
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/0c6ea1a5-5499-4df7-bca5-e779208a1e91)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/e56039c4-1838-4218-8a22-8d136cc76e19)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/09396fd2-fb8e-450d-9bef-f768792c521c)
 <p>
 Following the creation of the VMs, connect to VM-1 through Remote Desktop using VM-1’s public IP address. Open a web browser and download Wireshark from https://www.wireshark.org/download.html. After installation is complete, launch Wireshark, choose “Ethernet”, and click on the blue fin icon in the top left corner to start observing traffic.
 </p>
 <br />
 
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/1bd2dcaf-4875-49a5-b99e-0f781ebe8c96)
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+Our first observation will focus on RDP (Remote Desktop Protocol) traffic. To start, enter “rdp” or “tcp.port==3389” (RDP uses port 3389) into the Wireshark search bar. In Wireshark, you'll see details like Source address, Destination address, and the Protocol being used (RDP). 
 </p>
+<br />
+
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/524a8d9c-a5c1-426c-a38f-2c8eae29589b)
 <p>
 Next, let's focus on ICMP traffic. In Wireshark's search bar, type “icmp” to filter for ICMP traffic. ICMP (Internet Control Message Protocol) is a network layer protocol that sends error messages and operational info. It's often used for network diagnostics and troubleshooting. 
 </p>
 <br />
 
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/835ced8d-e8ad-4b67-97bd-04a1792328a3)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/3a9dbf17-29dd-4004-a6e4-4f65246a7285)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/6fc35d2f-12bb-43d8-8c77-162abc77799d)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/6637cc51-c961-45ba-82ab-b2e6721e6bb4)
 <p>
 To observe ICMP traffic in Wireshark, we will now ping VM2's private IP address from VM-1. Ping uses ICMP messages to check if a device is reachable over a network and measures the time it takes for a message to travel to and from the device. Go to Azure and copy VM-2’s private IP address. From VM-1, open PowerShell (run as admin) and ping [VM-2’s private ip address]. In Wireshark you will be able to see the ping request and reply packets being sent to and from the Ubuntu VM. In Wireshark, we can also examine each packet individually and view the actual data transmitted during each ping. We can use the PowerShell command “ping www.google.com -4" to observe additional ICMP traffic, where the “-4” flag specifies the use of the IPv4 protocol.
 </p>
 <br />
 
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/816033ec-c11d-4e17-993f-b7d41b3d8cd1)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/32afa201-b276-4809-840d-5eb3654fe78c)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/01cea0ed-1215-4c03-a8be-160ea8a01fbe)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/ea54b1f0-ba5b-45ef-8c2e-2514c0703a0f)
+![image](https://github.com/jamstylr/azure-network-protocols/assets/159660523/afdf2e5e-850c-49b5-8084-fa0325ba2683)
 <p>
 Next, we'll block inbound ICMP traffic on our Ubuntu VM to see its effects in Wireshark. Start by continuously pinging the Ubuntu VM with the command “ping [VM-2’s private IP address] -t” in PowerShell. Then, return to the Azure Portal and go to the Network Security Group page for VM-2, labeled as VM-2-nsg. In the Inbound Security Rules section, click “Add” to set up a new security rule. Create a rule that denies ICMP traffic from any source. For this tutorial, keep the source and destination port ranges as (*), meaning “Any”. Note that ICMP doesn't use ports, so the destination port doesn't affect this rule. Choose “ICMP” as the protocol and set the Action to “Deny”. Assign a priority level of 200 to ensure this rule takes precedence over others (lower numbers have higher priority). You can name this rule as you like, but I’ve named it “Deny_ICMP_Ping_From_Anywhere” for clarity. Click “Add” to apply the new rule. 
 </p>
 <br />
+
 
 <p>
 Returning to VM-1, PowerShell will indicate that the ping requests have timed out, and Wireshark will display only “request” packets without any corresponding “reply” packets. To allow pinging to VM-2 again, navigate back to Azure. To restore the ability to ping VM-2, you can either delete the previously created Inbound Security rule or modify its Action from "Deny" to “Allow". After making this change, PowerShell will stop showing timed-out requests, and Wireshark will once again capture “reply” packets. To stop the continuous pinging in PowerShell, press Control+C. 
